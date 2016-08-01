@@ -33,6 +33,7 @@ import android.view.animation.LinearInterpolator;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.handmark.pulltorefresh.library.ILoadingLayout;
@@ -64,6 +65,9 @@ public abstract class LoadingLayout extends FrameLayout implements ILoadingLayou
 	private CharSequence mRefreshingLabel;
 	private CharSequence mReleaseLabel;
 
+	private View mImageLayout;
+	private View mTextLayout;
+
 	public LoadingLayout(Context context, final Mode mode, final Orientation scrollDirection, TypedArray attrs) {
 		super(context);
 		mMode = mode;
@@ -84,6 +88,9 @@ public abstract class LoadingLayout extends FrameLayout implements ILoadingLayou
 		mHeaderProgress = (ProgressBar) mInnerLayout.findViewById(R.id.pull_to_refresh_progress);
 		mSubHeaderText = (TextView) mInnerLayout.findViewById(R.id.pull_to_refresh_sub_text);
 		mHeaderImage = (ImageView) mInnerLayout.findViewById(R.id.pull_to_refresh_image);
+
+		mImageLayout = mInnerLayout.findViewById(R.id.fl_inner_image);
+		mTextLayout = mInnerLayout.findViewById(R.id.fl_inner_linear);
 
 		FrameLayout.LayoutParams lp = (FrameLayout.LayoutParams) mInnerLayout.getLayoutParams();
 
@@ -388,6 +395,23 @@ public abstract class LoadingLayout extends FrameLayout implements ILoadingLayou
 		if (null != mSubHeaderText) {
 			mSubHeaderText.setTextColor(color);
 		}
+	}
+
+	public void setTextVisible(boolean v)
+	{
+		RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+		if (v)
+		{
+			params.rightMargin = 10;
+            params.addRule(RelativeLayout.LEFT_OF, R.id.fl_inner_linear);
+		}
+		else {
+			params.addRule(RelativeLayout.CENTER_IN_PARENT);
+		}
+
+		mImageLayout.setLayoutParams(params);
+
+		mTextLayout.setVisibility(v?VISIBLE:GONE);
 	}
 
 }

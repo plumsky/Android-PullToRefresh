@@ -70,4 +70,11 @@ public class LoadingLayoutProxy implements ILoadingLayout {
 			layout.setTextTypeface(tf);
 		}
 	}
+
+	@Override
+	public void setTextVisible(boolean show) {
+		for (LoadingLayout layout : mLoadingLayouts) {
+			layout.setTextVisible(show);
+		}
+	}
 }

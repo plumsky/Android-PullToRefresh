@@ -54,4 +54,6 @@ public interface ILoadingLayout {
 	 */
 	public void setTextTypeface(Typeface tf);
 
+	void setTextVisible(boolean show);
+
 }
